@@ -20,10 +20,12 @@ namespace librcsscontroller
      *  message is logged, streams that are subscribed to the same LogLevel
      *  will have the message written to them.
      *
-     *  LogLevels can also have a StreamWriter prefix, which prefixes data to
-     *  each message that is logged at that LogLevel. For example, the 
-     *  DateTimeWriter class writes the date, time, and LogLevel identifier
-     *  to the stream.
+     *  Each stream has a prefix StreamWriter instance, which prefixes data to 
+     *  messages written to that stream. By default, streams are given a 
+     *  DateTimeWriter instance to prepend the date, time, and LogLevel 
+     *  identifier to messages sent to that stream. Custom StreamWriter
+     *  instances can be used to change this behaviour, or a 'nullptr' can be
+     *  used to specify no prefix for a stream.
      */
     class Logger
     {
@@ -57,6 +59,7 @@ namespace librcsscontroller
         /**
          *  Adds an output stream as a subscriber for all messages logged at
          *  levels between (and including) 'lowest' and 'highest' LogLevels.
+         *  Each message is prefixed using the 'prefix' StreamWriter instance.
          *
          *  @param out[in] The output stream to subscribe to messages.
          *  @param highest The highest level to subscribe to.
